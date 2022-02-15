@@ -127,9 +127,9 @@ public:
     }
 };
 
-/*******************************
-*     GENERIC PROLOG TERM	*
-*******************************/
+		 /*******************************
+		 *     GENERIC PROLOG TERM	*
+		 *******************************/
 
 
 class PlTerm {
@@ -225,9 +225,9 @@ public:
 };
 
 
-/*******************************
-*	   TERM VECTOR		*
-*******************************/
+		 /*******************************
+		 *	   TERM VECTOR		*
+		 *******************************/
 
 class PlTermv {
 public:
@@ -268,9 +268,9 @@ public:
     PlTerm operator[](size_t n) const;
 };
 
-/*******************************
-*	 SPECIALISED TERMS	*
-*******************************/
+		 /*******************************
+		 *	 SPECIALISED TERMS	*
+		 *******************************/
 
 class PlCompound : public PlTerm {
 public:
@@ -316,9 +316,9 @@ public:
 };
 
 
-/*******************************
-*	      EXCEPTIONS	*
-*******************************/
+		 /*******************************
+		 *	      EXCEPTIONS	*
+		 *******************************/
 
 class PlException : public PlTerm {
 public:
@@ -431,9 +431,9 @@ public:
 };
 
 
-/*******************************
-*     PLTERM IMPLEMENTATION	*
-*******************************/
+		 /*******************************
+		 *     PLTERM IMPLEMENTATION	*
+		 *******************************/
 
 __inline
 PlTerm::PlTerm() {
@@ -479,9 +479,9 @@ PlTerm::PlTerm(void *ptr) {
         throw PlResourceError();
 }
 
-/*******************************
-*  SPECIALISED IMPLEMENTATIONS *
-*******************************/
+		 /*******************************
+		 *  SPECIALISED IMPLEMENTATIONS *
+		 *******************************/
 
 __inline
 PlString::PlString(const char *text) : PlTerm() {
@@ -532,9 +532,9 @@ PlCharList::PlCharList(const wchar_t *text) : PlTerm() {
 }
 
 
-/*******************************
-*             LISTS		*
-*******************************/
+		 /*******************************
+		 *             LISTS		*
+		 *******************************/
 
 class PlTail : public PlTerm {
 public:
@@ -579,9 +579,9 @@ public:
 };
 
 
-/*******************************
-*	     REGISTER		*
-*******************************/
+		 /*******************************
+		 *	     REGISTER		*
+		 *******************************/
 
 
 class PlRegister {
@@ -611,9 +611,9 @@ public:
 };
 
 
-/*******************************
-*	 CALLING PROLOG		*
-*******************************/
+		 /*******************************
+		 *	 CALLING PROLOG		*
+		 *******************************/
 
 class PlFrame {
 public:
@@ -695,9 +695,10 @@ __inline int PlCall(const wchar_t *goal) {
 }
 
 
-/*******************************
-*	    ATOM (BODY)		*
-*******************************/
+
+		 /*******************************
+		 *	    ATOM (BODY)		*
+		 *******************************/
 
 __inline
 PlAtom::PlAtom(const PlTerm &t) {
@@ -710,11 +711,11 @@ PlAtom::PlAtom(const PlTerm &t) {
 }
 
 
-/*******************************
-*	    TERM (BODY)		*
-*******************************/
+		 /*******************************
+		 *	    TERM (BODY)		*
+		 *******************************/
 
-/* PlTerm --> C */
+					/* PlTerm --> C */
 
 __inline PlTerm::operator char *(void) const {
     char *s;
@@ -779,7 +780,7 @@ __inline PlTerm::operator void *(void) const {
     throw PlTypeError("pointer", ref);
 }
 
-/* compounds */
+					/* compounds */
 
 __inline PlTerm PlTerm::operator[](ARITY_T index) const {
     PlTerm t;
@@ -823,7 +824,7 @@ __inline const char *PlTerm::name() const {
 }
 
 
-/* Unification */
+					/* Unification */
 
 __inline int PlTerm::operator=(const PlTerm &t2)    /* term = term */
 {
@@ -901,7 +902,7 @@ __inline int PlTerm::operator=(const PlFunctor &f) {
     return rc;
 }
 
-/* comparison */
+					/* comparison */
 
 
 __inline int PlTerm::operator==(long v) const {
@@ -958,7 +959,7 @@ __inline int PlTerm::operator>=(long v) const {
     throw PlTypeError("integer", ref);
 }
 
-/* comparison (string) */
+				      /* comparison (string) */
 
 __inline int PlTerm::operator==(const char *s) const {
     char *s0;
@@ -988,9 +989,9 @@ __inline int PlTerm::operator==(const PlAtom &a) const {
 }
 
 
-/*******************************
-*	   COMPOUND (BODY)	*
-*******************************/
+		 /*******************************
+		 *	   COMPOUND (BODY)	*
+		 *******************************/
 
 __inline void PlPutTerm(term_t to, term_t from) {
     if (!PL_put_term(to, from))
@@ -1030,9 +1031,9 @@ PlCompound::PlCompound(const wchar_t *functor, const PlTermv &args) : PlTerm() {
         throw PlResourceError();
 }
 
-/*******************************
-*	   TERMV (BODY)		*
-*******************************/
+		 /*******************************
+		 *	   TERMV (BODY)		*
+		 *******************************/
 
 
 __inline PlTermv::PlTermv(PlTerm m0) {
@@ -1088,9 +1089,9 @@ __inline PlTerm PlTermv::operator[](size_t n) const {
 }
 
 
-/*******************************
-*	EXCEPTIONS (BODY)       *
-*******************************/
+		 /*******************************
+		 *	EXCEPTIONS (BODY)       *
+		 *******************************/
 
 __inline PlException::operator const char *(void) {
     PlFrame fr;
@@ -1155,9 +1156,9 @@ __inline void PlException::cppThrow() {
 }
 
 
-/*******************************
-*	    QUERY (BODY)	*
-*******************************/
+		 /*******************************
+		 *	    QUERY (BODY)	*
+		 *******************************/
 
 __inline int PlQuery::next_solution() {
     int rval;
@@ -1175,9 +1176,9 @@ __inline int PlQuery::next_solution() {
 }
 
 
-/*******************************
-*	      ENGINE		*
-*******************************/
+		 /*******************************
+		 *	      ENGINE		*
+		 *******************************/
 
 class PlError {
 public:
@@ -1186,14 +1187,14 @@ public:
     PlError(const char *msg) {
         size_t len = strlen(msg) + 1;
         message = new char[len];
-#ifdef _MSC_VER                /* Yek */
+#ifdef _MSC_VER ///////////////////////////
 #pragma warning( push )
 #pragma warning (disable:4996)
-#endif
+#endif ///////////////////////////////////
         strncpy(message, msg, len);
-#ifdef _MSC_VER
+#ifdef _MSC_VER /////////////////////////
 #pragma warning( pop )
-#endif
+#endif /////////////////////////////////
     }
 
     ~PlError() {
@@ -1226,9 +1227,9 @@ public:
 };
 
 
-/*******************************
-*     REGISTER PREDICATES	*
-*******************************/
+		 /*******************************
+		 *     REGISTER PREDICATES	*
+		 *******************************/
 
 #ifndef PROLOG_MODULE
 #define PROLOG_MODULE (const char*)NULL
